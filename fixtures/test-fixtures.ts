@@ -3,7 +3,7 @@ import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
-import { TestUsers } from '../test-data/test-data.config';
+import { TestUsers } from '../test-data';
 
 interface PageFixtures {
     loginPage: LoginPage;

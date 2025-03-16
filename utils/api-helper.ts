@@ -1,5 +1,5 @@
 import { request, APIRequestContext } from '@playwright/test';
-import { TestUsers } from '../test-data/test-data.config';
+import { TestUsers } from '../test-data';
 
 export class APIHelper {
     private context: APIRequestContext;

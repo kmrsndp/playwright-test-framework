@@ -1,5 +1,5 @@
 import { APIHelper } from './utils/api-helper';
-import { TestUsers } from './test-data/test-data.config';
+import { TestUsers } from './test-data';
 
 async function globalSetup() {
     // Create API helper

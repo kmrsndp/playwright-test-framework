@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { test } from '../fixtures/test-fixtures';
-import { TestUsers } from '../test-data/test-data.config';
+import { TestUsers } from '../test-data';
 
 test.describe('Complete Purchase Flow Tests', () => {
     /**
