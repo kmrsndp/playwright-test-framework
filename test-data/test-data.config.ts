@@ -1,3 +1,10 @@
+// This file is deprecated. Please use the modular imports from test-data/index.ts
+// Example: import { TestUsers, TestProducts, ErrorMessages } from '../test-data';
+
+export * from './users';
+export * from './products';
+export * from './messages';
+
 export const TestUsers = {
     standardUser: {
         username: 'standard_user',

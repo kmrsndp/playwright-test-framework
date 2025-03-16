@@ -3,23 +3,14 @@ import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { CartPage } from '../pages/CartPage';
 import { log } from '../utils/logger';
+import { TestUsers, CustomerInfo, ErrorMessages } from '../test-data';
+import { type Product, type CartItem } from '../types/product';
+import { type CustomerData } from '../types/user';
 
 test.describe('Shopping Cart Workflows', () => {
     let loginPage: LoginPage;
     let inventoryPage: InventoryPage;
     let cartPage: CartPage;
-
-    // Test data
-    const standardUser = {
-        username: 'standard_user',
-        password: 'secret_sauce'
-    };
-
-    const customerInfo = {
-        firstName: 'John',
-        lastName: 'Doe',
-        postalCode: '12345'
-    };
 
     test.beforeEach(async ({ page }) => {
         log.info('Setting up test');
@@ -27,9 +18,9 @@ test.describe('Shopping Cart Workflows', () => {
         inventoryPage = new InventoryPage(page);
         cartPage = new CartPage(page);
 
-        // Login before each test
+        // Login before each test using TestUsers
         await loginPage.goto();
-        await loginPage.login(standardUser.username, standardUser.password);
+        await loginPage.login(TestUsers.standardUser.username, TestUsers.standardUser.password);
         await inventoryPage.waitForPageLoad();
     });
 
@@ -61,12 +52,12 @@ test.describe('Shopping Cart Workflows', () => {
             expect(cartPrice).toBe(`$${itemPrices[item]}`);
         }
 
-        // Complete checkout
+        // Complete checkout using CustomerInfo
         await cartPage.proceedToCheckout();
         await cartPage.fillCheckoutInfo(
-            customerInfo.firstName,
-            customerInfo.lastName,
-            customerInfo.postalCode
+            CustomerInfo.default.firstName,
+            CustomerInfo.default.lastName,
+            CustomerInfo.default.postalCode
         );
 
         // Verify total matches sum of items plus tax
@@ -139,21 +130,21 @@ test.describe('Shopping Cart Workflows', () => {
 
         // Try checking out with no information
         await cartPage.fillCheckoutInfo('', '', '');
-        expect(await cartPage.getErrorMessage()).toContain('First Name is required');
+        expect(await cartPage.getErrorMessage()).toBe(ErrorMessages.firstNameRequired);
 
         // Try with only first name
-        await cartPage.fillCheckoutInfo(customerInfo.firstName, '', '');
-        expect(await cartPage.getErrorMessage()).toContain('Last Name is required');
+        await cartPage.fillCheckoutInfo(CustomerInfo.default.firstName, '', '');
+        expect(await cartPage.getErrorMessage()).toBe(ErrorMessages.lastNameRequired);
 
         // Try with first and last name
-        await cartPage.fillCheckoutInfo(customerInfo.firstName, customerInfo.lastName, '');
-        expect(await cartPage.getErrorMessage()).toContain('Postal Code is required');
+        await cartPage.fillCheckoutInfo(CustomerInfo.default.firstName, CustomerInfo.default.lastName, '');
+        expect(await cartPage.getErrorMessage()).toBe(ErrorMessages.postalCodeRequired);
 
         // Complete with all information
         await cartPage.fillCheckoutInfo(
-            customerInfo.firstName,
-            customerInfo.lastName,
-            customerInfo.postalCode
+            CustomerInfo.default.firstName,
+            CustomerInfo.default.lastName,
+            CustomerInfo.default.postalCode
         );
         
         // Verify we moved to the next step
