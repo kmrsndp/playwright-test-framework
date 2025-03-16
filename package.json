@@ -1,0 +1,29 @@
+{
+  "name": "playwright-test-framework",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:chrome": "playwright test --project=Chrome",
+    "test:headed": "playwright test --headed",
+    "test:chrome:headed": "playwright test --project=Chrome --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "test:purchase-flow": "playwright test tests/complete-purchase-flow.spec.ts --project=Chrome --headed",
+    "test:ci": "playwright test --project=Chrome --reporter=list,html,junit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "@types/winston": "^2.4.4",
+    "winston": "^3.17.0"
+  }
+}
